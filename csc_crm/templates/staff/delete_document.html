@@ -1,0 +1,32 @@
+ {% extends 'staff/base.html' %}
+
+{% block content %}
+
+<div class="glass-card">
+
+<h2>Delete Document</h2>
+
+<br>
+
+<p>
+Are you sure want to delete this document?
+</p>
+
+<br>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <button type="submit"
+            class="glass-btn">
+
+        Confirm Delete
+
+    </button>
+
+</form>
+
+</div>
+
+{% endblock %}

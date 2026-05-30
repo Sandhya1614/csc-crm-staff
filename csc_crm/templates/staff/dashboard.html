@@ -1,0 +1,64 @@
+{% extends 'staff/base.html' %}
+
+
+{% block content %}
+<div class="glass-card">
+    <h1>Documents Dashboard</h1>
+    <br>
+    <form method="GET">
+        <input type="text"
+               name="search"
+               class="glass-input"
+               placeholder="Search Documents">
+        <button class="glass-btn">
+            Search
+        </button>
+    </form>
+    <table>
+        
+        <tr>
+            <th>Name</th>
+            <th>Certificate ID</th>
+            <th>Department</th>
+            <th>Status</th>
+            <th>Actions</th>
+        
+        </tr>
+        
+        {% for doc in documents %}
+        
+        <tr>
+            <td>{{ doc.name }}</td>
+            <td>{{ doc.certificate_id }}</td>
+            <td>{{ doc.department }}</td>
+            <td>
+                {% if doc.verified %}
+                    ✅ Verified
+                {% else %}
+                    ❌ Fake
+                {% endif %}
+            </td>
+            <td>
+               
+                <a href="{% url 'view_document' doc.id %}"
+                   class="action-btn view-btn">
+                    View
+                
+                </a>
+                
+                <a href="{% url 'update_document' doc.id %}"
+                   class="action-btn edit-btn">
+                    Edit
+               
+                </a>
+                
+                <a href="{% url 'delete_document' doc.id %}"
+                   class="action-btn delete-btn">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

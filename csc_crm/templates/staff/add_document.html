@@ -1,0 +1,30 @@
+{% extends 'staff/base.html' %}
+
+
+{% block content %}
+
+<div class="glass-card">
+
+<h2>Add Document</h2>
+
+<br>
+
+<form method="POST"
+      enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit"
+            class="glass-btn">
+
+        Upload Document
+
+    </button>
+
+</form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'staff/base.html' %}
+
+{% block content %}
+
+<div class="glass-card">
+
+<h1>Certificate Verification</h1>
+
+<br>
+
+<form method="GET">
+
+    <input type="text"
+           name="certificate_id"
+           class="glass-input"
+           placeholder="Enter Certificate ID">
+
+    <button class="glass-btn">
+        Verify
+    </button>
+
+</form>
+
+{% if certificate %}
+
+<br>
+
+<h2>
+    Certificate Found
+</h2>
+
+<br>
+
+<p>
+<strong>Name:</strong>
+{{ certificate.name }}
+</p>
+
+<br>
+
+<p>
+<strong>Department:</strong>
+{{ certificate.department }}
+</p>
+
+<br>
+
+<p>
+
+<strong>Status:</strong>
+
+{% if certificate.verified %}
+
+<span style="color:#22c55e;">
+    ✅ Original Certificate
+</span>
+
+{% else %}
+
+<span style="color:red;">
+    ❌ Fake Certificate
+</span>
+
+{% endif %}
+
+</p>
+
+{% else %}
+
+<br>
+
+<p>
+❌ Certificate Not Found
+</p>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

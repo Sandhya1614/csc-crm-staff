@@ -214,6 +214,7 @@ body{
     color:#ffe600;
     font-size:38px;
     font-weight:700;
+    margin-left:10px;
 }
 
 .nav-links{
@@ -370,13 +371,13 @@ table tr{
 }
 
 
-.add-btn{
+{% comment %} .add-btn{
     background:#ffe600;
     color:#111;
     padding:14px 25px;
     border-radius:14px;
     font-weight:600;
-}
+} {% endcomment %}
 
 @keyframes fadeIn{
 
@@ -409,7 +410,7 @@ table tr{
         </a>
 
         <a href="{% url 'add_document' %}">
-            Add Document
+            + Upload
         </a>
 
        

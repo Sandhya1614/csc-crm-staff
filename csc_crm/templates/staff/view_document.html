@@ -1,7 +1,18 @@
- {% extends 'staff/base.html' %}
 
-{% block content %}
+{% load static %}
 
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title> Dashboard</title>
+    <link rel="stylesheet"
+          href="{% static 'staff.css/dashboard.css' %}">  
+
+</head>
+
+<body>
 <div class="glass-card">
 
 <h2>View Document</h2>
@@ -56,4 +67,5 @@
 
 </div>
 
-{% endblock %}
+</body>
+</html>

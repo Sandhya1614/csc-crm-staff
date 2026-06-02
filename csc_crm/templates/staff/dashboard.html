@@ -1,9 +1,26 @@
-{% extends 'staff/base.html' %}
 
 
-{% block content %}
+
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title> Dashboard</title>
+    <link rel="stylesheet"
+          href="{% static 'staff.css/dashboard.css' %}">  
+
+</head>
+
+<body>
+
+
 <div class="glass-card">
-    <h1>Documents Dashboard</h1>
+    <h1>Documents </h1>
     <br>
     <form method="GET">
         <input type="text"
@@ -13,7 +30,17 @@
         <button class="glass-btn">
             Search
         </button>
+
+
     </form>
+
+<a href="{% url 'add_document' %}"
+                       class="action-btn view-btn">
+
+            + Upload
+        </a>
+    <br>
+    <br>
     <table>
         
         <tr>
@@ -51,14 +78,78 @@
                     Edit
                
                 </a>
-            
+{% comment %}             
                 <a href="{% url 'delete_document' doc.id %}"
                    class="action-btn delete-btn">
                     Delete
-                </a>
+                </a> {% endcomment %}
+                <button type="button"
+        class="action-btn delete-btn"
+        onclick="showDeleteCard('{{ doc.id }}')">
+    Delete
+</button>
             </td>
         </tr>
         {% endfor %}
     </table>
 </div>
-{% endblock %}
+
+<div id="deleteCard" class="delete-card">
+
+    <h3>⚠ Delete Warning</h3>
+
+    <p>Are you sure you want to delete this document?</p>
+
+    <a id="confirmDeleteBtn"
+       class="action-btn delete-btn">
+       Yes Delete
+    </a>
+
+    <button type="button"
+            onclick="closeDeleteCard()"
+            class="action-btn edit-btn">
+        Cancel
+    </button>
+
+</div>
+
+    <script>
+function showDeleteCard(id){
+
+    document.getElementById("deleteCard").style.display = "block";
+
+    document.getElementById("confirmDeleteBtn").href =
+        "/delete_document/" + id + "/";
+}
+
+function closeDeleteCard(){
+
+    document.getElementById("deleteCard").style.display = "none";
+}
+</script>
+{% comment %} 
+console.log("Glassmorphism Dashboard Loaded");
+
+const cards = document.querySelectorAll('.glass-card');
+
+cards.forEach(card => {
+
+    card.addEventListener('mousemove', e => {
+
+        let x = e.offsetX;
+        let y = e.offsetY;
+
+        card.style.background = `
+        radial-gradient(
+        circle at ${x}px ${y}px,
+        rgba(24, 11, 143, 0.2),
+        rgba(255,255,255,0.08)
+        )
+        `;
+    });
+
+});  {% endcomment %}
+
+
+</body>
+</html>

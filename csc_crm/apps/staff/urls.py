@@ -2,12 +2,15 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    # Own document vault
+    path('', views.document_vault, name='document_vault'),
+    path('documents/upload/', views.upload_document, name='upload_document'),
 
-    path('', views.dashboard, name='dashboard'),
-    path('add/',views.add_document,name='add_document' ),
-    path('update/<int:id>/',views.update_document,name='update_document' ),
-    path('delete/<int:id>/',views.delete_document,name='delete_document'),
-    path('view/<int:id>/',views.view_document,name='view_document' ),
-    path('verify/', views.verify_certificate, name='verify_certificate'),
+
+    path('staff/<int:staff_id>/documents/', views.document_vault, name='staff_document_vault'),
+    path('staff/<int:staff_id>/documents/upload/', views.upload_document, name='staff_upload_document'),
     
+    # Document actions
+    path('documents/<int:doc_id>/status/', views.update_document_status, name='update_document_status'),
+    path('delete/<int:doc_id>/delete/', views.delete_document, name='delete_document'),
 ]

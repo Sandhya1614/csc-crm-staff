@@ -1,0 +1,149 @@
+{% load static %}
+
+<tr class="doc-row" id="doc-row-{{ doc.pk }}">
+
+    <!-- Name & File -->
+    <td>
+        <div style="display:flex; align-items:center; gap:10px;">
+
+            {% if doc.doc_type == 'pdf' %}
+                <div class="file-icon pdf">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+
+            {% elif doc.doc_type == 'image' %}
+                <div class="file-icon img">
+                    <i class="fas fa-file-image"></i>
+                </div>
+
+            {% elif doc.doc_type == 'doc' %}
+                <div class="file-icon doc">
+                    <i class="fas fa-file-word"></i>
+                </div>
+
+            {% else %}
+                <div class="file-icon other">
+                    <i class="fas fa-file"></i>
+                </div>
+            {% endif %}
+
+            <div style="min-width:0;">
+                <div style="
+                    font-weight:500;
+                    overflow:hidden;
+                    text-overflow:ellipsis;
+                    white-space:nowrap;
+                ">
+                    {{ doc.name }}
+                </div>
+
+                <div style="
+                    font-size:11px;
+                    color:var(--text-muted);
+                    overflow:hidden;
+                    text-overflow:ellipsis;
+                    white-space:nowrap;
+                ">
+                    {{ doc.filename }}
+                </div>
+            </div>
+
+        </div>
+    </td>
+
+    <!-- Type -->
+    <td>
+        <span style="
+            color:var(--text-muted);
+            font-size:12px;
+            text-transform:uppercase;
+        ">
+            {{ doc.get_file_extension }}
+        </span>
+    </td>
+
+    <!-- Upload Date -->
+    <td>
+        <span style="
+            color:var(--text-muted);
+            font-size:12px;
+        " title="{{ doc.uploaded_at }}">
+            {{ doc.uploaded_at|date:"d M Y" }}
+        </span>
+    </td>
+
+    <!-- Status -->
+    <td>
+        <div style="display:flex; align-items:center; gap:8px;">
+
+            <span class="status-badge {{ doc.status }}"
+                  id="badge-{{ doc.pk }}">
+
+                {% if doc.status == 'verified' %}
+                    <i class="fas fa-check-circle"></i>
+
+                {% elif doc.status == 'rejected' %}
+                    <i class="fas fa-times-circle"></i>
+
+                {% else %}
+                    <i class="fas fa-clock"></i>
+                {% endif %}
+
+                {{ doc.get_status_display }}
+            </span>
+
+            <select class="status-select"
+                    onchange="changeStatus({{ doc.pk }}, this)"
+                    title="Change Status">
+
+                {% for value, label in doc.STATUS_CHOICES %}
+                    <option value="{{ value }}"
+                        {% if doc.status == value %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                {% endfor %}
+
+            </select>
+
+        </div>
+    </td>
+
+    <!-- Actions -->
+    <td style="text-align:right;">
+        <div style="
+            display:flex;
+            justify-content:flex-end;
+            gap:4px;
+        ">
+
+            <!-- View -->
+            <a href="{{ doc.file.url }}"
+               target="_blank"
+               class="btn-action"
+               title="View Document">
+                <i class="fas fa-eye"></i>
+            </a>
+
+            <!-- Download -->
+            <a href="{{ doc.file.url }}"
+               download
+               class="btn-action"
+               title="Download">
+                <i class="fas fa-download"></i>
+            </a> 
+            
+
+            <!-- Delete -->
+            <button class="btn-action danger"
+                    title="Delete "
+                    data-id="{{doc.id}}"
+                    data-name="{{doc.name}}"
+                    {% comment %} data-url="{% url 'delete_document' doc.id %}"  {% endcomment %}
+                    onclick="confirmDelete({{ doc.pk }}, '{{ doc.name|escapejs }}')">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+
+        </div>
+    </td>
+
+</tr>
